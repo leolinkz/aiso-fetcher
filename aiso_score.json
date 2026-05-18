@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-05-17T22:44:42.587815",
+  "asset": "GOLD",
+  "asset_label": "Gold (XAUUSD)",
+  "category": "commodity",
+  "scores": {
+    "reddit": 7.2
+  },
+  "weights": {
+    "fear_greed": 0.0
+  },
+  "composite": 7.2,
+  "zone": "NEUTRAL"
+}
