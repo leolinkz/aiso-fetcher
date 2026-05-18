@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="300">
+<title>AISO Live Score</title>
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111620;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8eaf0;
+    --muted: #4a5268;
+    --mono: 'Courier New', monospace;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 36px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .header-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .asset-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid;
+  }
+
+  .score-ring {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+
+  .score-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-number {
+    font-size: 48px;
+    font-weight: 700;
+    font-family: var(--mono);
+    line-height: 1;
+  }
+
+  .score-unit {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+
+  .zone-label {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -.01em;
+  }
+
+  .zone-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    margin-bottom: 10px;
+  }
+
+  .copy-btn:hover { opacity: .88; }
+  .copy-btn:active { transform: scale(.97); }
+
+  .copy-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-family: var(--mono);
+  }
+
+  .breakdown {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .source-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .source-label {
+    font-size: 12px;
+    color: var(--muted);
+    width: 100px;
+    flex-shrink: 0;
+    font-family: var(--mono);
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width .6s ease;
+  }
+
+  .source-val {
+    font-family: var(--mono);
+    font-size: 12px;
+    width: 44px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .refresh-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #00c896;
+    margin-right: 5px;
+    animation: pulse 2s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; }
+    50% { opacity:.3; }
+  }
+
+  .tv-instructions {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: left;
+  }
+
+  .tv-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .tv-step {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .tv-step span:first-child {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    color: #378ADD;
+  }
+
+  .error-state {
+    color: #ff4d6d;
+    font-size: 14px;
+    padding: 20px;
+  }
+
+  .loading {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 14px;
+    animation: fade 1s infinite alternate;
+  }
+
+  @keyframes fade { from{opacity:.4} to{opacity:1} }
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <div class="loading">Loading score...</div>
+</div>
+
+<script>
+// ── Zone config ──────────────────────────────────────────────
+const ZONES = {
+  "EXTREME GREED": { color:"#00c896", bg:"rgba(0,200,150,0.12)", border:"rgba(0,200,150,0.3)", desc:"Overheated — watch for reversal" },
+  "GREED"        : { color:"#00e5c0", bg:"rgba(0,229,192,0.10)", border:"rgba(0,229,192,0.25)", desc:"Bullish bias — favour longs" },
+  "NEUTRAL"      : { color:"#888888", bg:"rgba(128,128,128,0.10)", border:"rgba(128,128,128,0.2)", desc:"No edge — trade technicals only" },
+  "FEAR"         : { color:"#f5a623", bg:"rgba(245,166,35,0.10)", border:"rgba(245,166,35,0.25)", desc:"Bearish bias — caution on longs" },
+  "EXTREME FEAR" : { color:"#ff4d6d", bg:"rgba(255,77,109,0.12)", border:"rgba(255,77,109,0.3)", desc:"Capitulation zone — watch for bottom" },
+};
+
+// ── Score → ring arc ─────────────────────────────────────────
+function scoreToArc(score) {
+  const pct = (score + 100) / 200;  // 0→1
+  const r   = 78;
+  const circ = 2 * Math.PI * r;
+  return { dasharray: circ, dashoffset: circ * (1 - pct) };
+}
+
+// ── Format timestamp ─────────────────────────────────────────
+function fmtTime(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) +
+           ' · ' + d.toLocaleDateString([], { month:'short', day:'numeric' });
+  } catch { return iso; }
+}
+
+// ── Source bar (normalised -100/+100 → 0-100% width) ────────
+function barPct(val) {
+  return Math.round((parseFloat(val) + 100) / 2) + '%';
+}
+
+// ── Copy to clipboard ────────────────────────────────────────
+function copyScore(score) {
+  navigator.clipboard.writeText(String(score)).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓  Copied! Paste into TradingView';
+    setTimeout(() => btn.textContent = '📋  Copy Score to Clipboard', 2000);
+  });
+}
+
+// ── Render ───────────────────────────────────────────────────
+function render(data) {
+  const score   = parseFloat(data.composite);
+  const zone    = (data.zone || 'NEUTRAL').toUpperCase();
+  const zCfg    = ZONES[zone] || ZONES["NEUTRAL"];
+  const asset   = data.asset  || 'BTC';
+  const label   = data.asset_label || asset;
+  const scores  = data.scores || {};
+  const { dasharray, dashoffset } = scoreToArc(score);
+  const scoreDisplay = (score >= 0 ? '+' : '') + score.toFixed(1);
+
+  // Source breakdown rows
+  const sourceRows = Object.entries(scores).map(([key, val]) => {
+    const lbl = key === 'fear_greed' ? 'F&G Index' : key.charAt(0).toUpperCase() + key.slice(1);
+    const v   = parseFloat(val);
+    const pct = barPct(v);
+    const col = v >= 0 ? '#00e5c0' : '#ff4d6d';
+    const display = (v >= 0 ? '+' : '') + v.toFixed(1);
+    return `
+      <div class="source-row">
+        <span class="source-label">${lbl}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct};background:${col}"></div></div>
+        <span class="source-val" style="color:${col}">${display}</span>
+      </div>`;
+  }).join('');
+
+  document.getElementById('card').innerHTML = `
+    <div class="header-label">AI Sentiment Oscillator · Live</div>
+
+    <div class="asset-badge" style="background:${zCfg.bg};border-color:${zCfg.border};color:${zCfg.color}">
+      ${label}
+    </div>
+
+    <div class="score-ring">
+      <svg viewBox="0 0 180 180">
+        <circle cx="90" cy="90" r="78" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="14"/>
+        <circle cx="90" cy="90" r="78" fill="none"
+          stroke="${zCfg.color}"
+          stroke-width="14"
+          stroke-linecap="round"
+          stroke-dasharray="${dasharray}"
+          stroke-dashoffset="${dashoffset}"
+          style="transition:stroke-dashoffset .8s ease"/>
+      </svg>
+      <div class="score-text">
+        <div class="score-number" style="color:${zCfg.color}">${scoreDisplay}</div>
+        <div class="score-unit">/ 100</div>
+      </div>
+    </div>
+
+    <div class="zone-label" style="color:${zCfg.color}">${zone}</div>
+    <div class="zone-sub">${zCfg.desc}</div>
+
+    <button class="copy-btn" id="copy-btn"
+      style="background:${zCfg.color};color:#000"
+      onclick="copyScore(${score})">
+      📋&nbsp; Copy Score to Clipboard
+    </button>
+    <div class="copy-hint">Then paste into AISO → Settings → Bias Score</div>
+
+    <div class="breakdown">
+      ${sourceRows}
+    </div>
+
+    <div class="tv-instructions">
+      <div class="tv-title">How to apply in TradingView</div>
+      <div class="tv-step"><span>1.</span><span>Click Copy Score above</span></div>
+      <div class="tv-step"><span>2.</span><span>Open AISO indicator → right-click → Settings</span></div>
+      <div class="tv-step"><span>3.</span><span>Enable <b>Manual Bias</b> toggle</span></div>
+      <div class="tv-step"><span>4.</span><span>Paste the number into <b>Bias Score</b> → OK</span></div>
+    </div>
+
+    <div class="meta-row">
+      <span><span class="refresh-dot"></span>Auto-refreshes every 5 min</span>
+      <span>Updated ${fmtTime(data.timestamp)}</span>
+    </div>
+  `;
+}
+
+// ── Fetch score from repo ────────────────────────────────────
+async function loadScore() {
+  // Cache-bust so GitHub Pages always serves fresh JSON
+  const url = './aiso_score.json?t=' + Date.now();
+  try {
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    render(data);
+  } catch(e) {
+    document.getElementById('card').innerHTML = `
+      <div class="header-label">AI Sentiment Oscillator</div>
+      <div class="error-state">
+        ⚠ Could not load score<br>
+        <span style="font-size:12px;color:#4a5268;font-family:monospace;margin-top:8px;display:block">${e.message}</span>
+        <span style="font-size:12px;color:#4a5268;margin-top:8px;display:block">
+          Make sure aiso_score.json exists in your repo root and GitHub Pages is enabled.
+        </span>
+      </div>`;
+  }
+}
+
+loadScore();
+</script>
+</body>
+</html>
