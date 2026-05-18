@@ -3,32 +3,110 @@ name: AISO Sentiment Fetcher
 on:
   schedule:
     - cron: '0 * * * *'   # runs every hour at :00
-  workflow_dispatch:       # also allows manual trigger
+  workflow_dispatch:       # allows manual trigger from Actions tab
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     permissions:
-      contents: write      # needed to commit results back
+      contents: write      # needed to commit aiso_score.json back to repo
 
     steps:
+      # ── 1. Check out the repo ───────────────────────────────
       - uses: actions/checkout@v4
 
+      # ── 2. Set up Python ────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      # ── 3. Install dependencies ─────────────────────────────
       - name: Install dependencies
         run: pip install requests
-      - name: Run fetcher
-        run: python fetcher.py
 
+      # ── 4. Run the multi-asset fetcher ──────────────────────
+      #    Change --asset BTC to any supported asset:
+      #    BTC ETH SOL GOLD SPY QQQ NVDA TSLA EURUSD OIL etc.
+      - name: Run fetcher
+        run: python fetcher_v2.py --asset BTC
+
+      # ── 5. Commit updated score back to repo ────────────────
       - name: Commit score to repo
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add aiso_score.json
-          git diff --staged --quiet || git commit -m "Update sentiment score"
+          git diff --staged --quiet || git commit -m "chore: update sentiment score [skip ci]"
           git push
 
+      # ── 6. Send Telegram alert ──────────────────────────────
+      #    Reads TELEGRAM_TOKEN and TELEGRAM_CHAT_ID from repo secrets.
+      #    See setup instructions below.
+      - name: Send Telegram alert
+        env:
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python3 - <<'EOF'
+          import json, os, urllib.request, urllib.parse
+
+          token   = os.environ.get("TELEGRAM_TOKEN", "")
+          chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+
+          if not token or not chat_id:
+              print("Telegram secrets not set — skipping alert.")
+              exit(0)
+
+          # Read the score file the fetcher just wrote
+          with open("aiso_score.json") as f:
+              d = json.load(f)
+
+          score  = d.get("composite", 0)
+          zone   = d.get("zone", "UNKNOWN")
+          asset  = d.get("asset_label", d.get("asset", "BTC"))
+          ts     = d.get("timestamp", "")[:16].replace("T", " ")
+          scores = d.get("scores", {})
+
+          # Zone emoji
+          emoji = {"EXTREME GREED":"🟢","GREED":"🔵","NEUTRAL":"⚪","FEAR":"🟡","EXTREME FEAR":"🔴"}
+          icon  = emoji.get(zone.upper(), "⚪")
+
+          # Source breakdown lines
+          src_lines = ""
+          for k, v in scores.items():
+              lbl = "F&G Index" if k == "fear_greed" else k.title()
+              src_lines += f"\n  {lbl}: {float(v):+.1f}"
+
+          sign = "+" if score >= 0 else ""
+          msg = (
+              f"{icon} *AISO Update — {asset}*\n"
+              f"━━━━━━━━━━━━━━━━━━\n"
+              f"*Score:*  `{sign}{score}`\n"
+              f"*Zone:*   `{zone}`\n"
+              f"━━━━━━━━━━━━━━━━━━\n"
+              f"*Sources:*{src_lines}\n"
+              f"━━━━━━━━━━━━━━━━━━\n"
+              f"*In TradingView:*\n"
+              f"AISO Settings → Enable Manual Bias\n"
+              f"→ Paste Bias Score: `{sign}{score}`\n"
+              f"━━━━━━━━━━━━━━━━━━\n"
+              f"_{ts} UTC_"
+          )
+
+          url  = f"https://api.telegram.org/bot{token}/sendMessage"
+          data = urllib.parse.urlencode({
+              "chat_id"    : chat_id,
+              "text"       : msg,
+              "parse_mode" : "Markdown",
+          }).encode()
+
+          try:
+              req = urllib.request.Request(url, data=data)
+              urllib.request.urlopen(req, timeout=10)
+              print(f"Telegram alert sent: {zone} {sign}{score}")
+          except Exception as e:
+              print(f"Telegram send failed: {e}")
+              # Don't fail the whole workflow just because Telegram had an issue
+              exit(0)
+          EOF
