@@ -2,48 +2,65 @@ name: AISO Sentiment Fetcher
 
 on:
   schedule:
-    - cron: '0 * * * *'   # runs every hour at :00
-  workflow_dispatch:       # allows manual trigger from Actions tab
+    - cron: '0 * * * *'   # every hour at :00
+  workflow_dispatch:       # manual trigger from Actions tab
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     permissions:
-      contents: write      # needed to commit aiso_score.json back to repo
+      contents: write      # needed to commit score files back to repo
 
     steps:
-      # ── 1. Check out the repo ───────────────────────────────
+
+      # ── 1. Checkout ────────────────────────────────────────
       - uses: actions/checkout@v4
 
-      # ── 2. Set up Python ────────────────────────────────────
+      # ── 2. Python ──────────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # ── 3. Install dependencies ─────────────────────────────
+      # ── 3. Install deps ────────────────────────────────────
       - name: Install dependencies
         run: pip install requests
 
-      # ── 4. Run the multi-asset fetcher ──────────────────────
-      #    Change --asset BTC to any supported asset:
-      #    BTC ETH SOL GOLD SPY QQQ NVDA TSLA EURUSD OIL etc.
-      - name: Run fetcher
-        run: python fetcher_v2.py --asset BTC
+      # ── 4. Fetch ALL 14 assets ─────────────────────────────
+      #    Runs fetcher_v2.py --all which saves:
+      #      scores/BTC.json
+      #      scores/ETH.json
+      #      scores/SOL.json
+      #      scores/SPY.json
+      #      scores/QQQ.json
+      #      scores/NVDA.json
+      #      scores/TSLA.json
+      #      scores/MSTR.json
+      #      scores/GOLD.json
+      #      scores/SILVER.json
+      #      scores/OIL.json
+      #      scores/EURUSD.json
+      #      scores/GBPUSD.json
+      #      scores/USDJPY.json
+      #      aiso_all_scores.json   (all assets combined — used by dashboard)
+      #      aiso_score.json        (BTC only — backward compat)
+      - name: Fetch all market scores
+        run: python fetcher_v2.py --all
 
-      # ── 5. Commit updated score back to repo ────────────────
-      - name: Commit score to repo
+      # ── 5. Commit all score files back to repo ─────────────
+      - name: Commit scores to repo
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add aiso_score.json
-          git diff --staged --quiet || git commit -m "chore: update sentiment score [skip ci]"
+          git add scores/ aiso_all_scores.json aiso_score.json
+          git diff --staged --quiet || git commit -m "chore: update all market scores [skip ci]"
           git push
 
-      # ── 6. Send Telegram alert ──────────────────────────────
-      #    Reads TELEGRAM_TOKEN and TELEGRAM_CHAT_ID from repo secrets.
-      #    See setup instructions below.
-      - name: Send Telegram alert
+      # ── 6. Telegram alert (optional) ──────────────────────
+      #    Sends a summary of all scores to your Telegram.
+      #    Set TELEGRAM_TOKEN and TELEGRAM_CHAT_ID in:
+      #    Repo → Settings → Secrets and variables → Actions
+      - name: Send Telegram summary
         env:
           TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -55,45 +72,50 @@ jobs:
           chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
 
           if not token or not chat_id:
-              print("Telegram secrets not set — skipping alert.")
+              print("Telegram secrets not configured — skipping.")
               exit(0)
 
-          # Read the score file the fetcher just wrote
-          with open("aiso_score.json") as f:
-              d = json.load(f)
+          try:
+              with open("aiso_all_scores.json") as f:
+                  summary = json.load(f)
+          except Exception as e:
+              print(f"Could not read summary: {e}")
+              exit(0)
 
-          score  = d.get("composite", 0)
-          zone   = d.get("zone", "UNKNOWN")
-          asset  = d.get("asset_label", d.get("asset", "BTC"))
-          ts     = d.get("timestamp", "")[:16].replace("T", " ")
-          scores = d.get("scores", {})
+          assets = summary.get("assets", {})
+          ts     = summary.get("generated_at", "")[:16].replace("T", " ")
 
-          # Zone emoji
-          emoji = {"EXTREME GREED":"🟢","GREED":"🔵","NEUTRAL":"⚪","FEAR":"🟡","EXTREME FEAR":"🔴"}
-          icon  = emoji.get(zone.upper(), "⚪")
+          EMOJI = {"EXTREME GREED":"🟢","GREED":"🔵","NEUTRAL":"⚪",
+                   "FEAR":"🟡","EXTREME FEAR":"🔴"}
 
-          # Source breakdown lines
-          src_lines = ""
-          for k, v in scores.items():
-              lbl = "F&G Index" if k == "fear_greed" else k.title()
-              src_lines += f"\n  {lbl}: {float(v):+.1f}"
+          # Group by category
+          cats = {"crypto":[],"stocks":[],"commodity":[],"forex":[]}
+          for key, d in assets.items():
+              cat = d.get("category","crypto")
+              cats.setdefault(cat, []).append(d)
 
-          sign = "+" if score >= 0 else ""
-          msg = (
-              f"{icon} *AISO Update — {asset}*\n"
-              f"━━━━━━━━━━━━━━━━━━\n"
-              f"*Score:*  `{sign}{score}`\n"
-              f"*Zone:*   `{zone}`\n"
-              f"━━━━━━━━━━━━━━━━━━\n"
-              f"*Sources:*{src_lines}\n"
-              f"━━━━━━━━━━━━━━━━━━\n"
-              f"*In TradingView:*\n"
-              f"AISO Settings → Enable Manual Bias\n"
-              f"→ Paste Bias Score: `{sign}{score}`\n"
-              f"━━━━━━━━━━━━━━━━━━\n"
-              f"_{ts} UTC_"
-          )
+          cat_labels = {"crypto":"Crypto","stocks":"Stocks",
+                        "commodity":"Commodities","forex":"Forex"}
 
+          lines = ["*AISO — Market Sentiment Update*",
+                   f"_{ts} UTC_",
+                   "━━━━━━━━━━━━━━━━━━"]
+
+          for cat, cat_lbl in cat_labels.items():
+              group = cats.get(cat, [])
+              if not group: continue
+              lines.append(f"\n*{cat_lbl}*")
+              for d in group:
+                  score = d["composite"]
+                  zone  = d["zone"]
+                  sign  = "+" if score >= 0 else ""
+                  icon  = EMOJI.get(zone, "⚪")
+                  lines.append(f"{icon} `{d['asset']:<7}` {sign}{score:>6.1f}  _{zone}_")
+
+          lines.append("\n━━━━━━━━━━━━━━━━━━")
+          lines.append("Open dashboard to copy any score → paste into TradingView Bias Score")
+
+          msg  = "\n".join(lines)
           url  = f"https://api.telegram.org/bot{token}/sendMessage"
           data = urllib.parse.urlencode({
               "chat_id"    : chat_id,
@@ -104,9 +126,8 @@ jobs:
           try:
               req = urllib.request.Request(url, data=data)
               urllib.request.urlopen(req, timeout=10)
-              print(f"Telegram alert sent: {zone} {sign}{score}")
+              print(f"Telegram sent — {len(assets)} assets")
           except Exception as e:
-              print(f"Telegram send failed: {e}")
-              # Don't fail the whole workflow just because Telegram had an issue
+              print(f"Telegram failed: {e}")
               exit(0)
           EOF
