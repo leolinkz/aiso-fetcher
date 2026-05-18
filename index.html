@@ -7,699 +7,158 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Base ─────────────────────────────────────────── */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-:root {
-  --bg:       #07080c;
-  --surface:  #0e1018;
-  --surface2: #13151f;
-  --surface3: #191c28;
-  --border:   rgba(255,255,255,0.06);
-  --border2:  rgba(255,255,255,0.12);
-  --text:     #dde1ec;
-  --text2:    #7a819a;
-  --text3:    #3d4257;
-  --accent:   #c8ff00;
-  --mono:     'DM Mono', monospace;
-  --display:  'Bebas Neue', sans-serif;
-  --body:     'Instrument Sans', sans-serif;
-
-  /* zone colours */
-  --eg: #00e676;
-  --g:  #00bfa5;
-  --n:  #546e7a;
-  --f:  #ffab40;
-  --ef: #ff5252;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--body);
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ── Grain overlay ────────────────────────────────────────── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: .45;
-}
-
-/* ── Layout shell ─────────────────────────────────────────── */
-.shell {
-  position: relative; z-index: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 28px 80px;
-}
-
-/* ── Header ───────────────────────────────────────────────── */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 0 0;
-  margin-bottom: 56px;
-}
-
-.logo {
-  display: flex; align-items: center; gap: 12px;
-}
-
-.logo-mark {
-  width: 36px; height: 36px;
-  background: var(--accent);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-}
-
-.logo-mark svg { width: 20px; height: 20px; }
-
-.logo-text {
-  font-family: var(--display);
-  font-size: 22px;
-  letter-spacing: .1em;
-  color: var(--text);
-}
-
-.logo-sub {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-top: -2px;
-}
-
-.live-badge {
-  display: flex; align-items: center; gap: 7px;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: 30px;
-  padding: 6px 14px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text2);
-}
-
-.live-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent);
-  animation: livepulse 2s infinite;
-}
-
-@keyframes livepulse {
-  0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(200,255,0,0.4); }
-  50%      { opacity:.6; box-shadow:0 0 0 5px rgba(200,255,0,0); }
-}
-
-/* ── Hero title ───────────────────────────────────────────── */
-.hero {
-  margin-bottom: 48px;
-}
-
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 10px;
-}
-.hero-eyebrow::after {
-  content: '';
-  flex: 1; max-width: 48px;
-  height: 1px; background: var(--accent);
-}
-
-.hero h1 {
-  font-family: var(--display);
-  font-size: clamp(52px, 8vw, 96px);
-  line-height: .92;
-  letter-spacing: .02em;
-  color: #fff;
-  margin-bottom: 16px;
-}
-
-.hero h1 em {
-  font-style: normal;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255,255,255,0.25);
-}
-
-.hero-sub {
-  font-size: 15px;
-  color: var(--text2);
-  max-width: 480px;
-  line-height: 1.6;
-}
-
-/* ── Market selector ──────────────────────────────────────── */
-.selector-section { margin-bottom: 40px; }
-
-.selector-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 14px;
-}
-
-.category-tabs {
-  display: flex; gap: 6px; flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.cat-btn {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 4px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text3);
-  cursor: pointer;
-  transition: all .15s;
-}
-
-.cat-btn:hover { border-color: var(--border2); color: var(--text2); }
-.cat-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #000;
-}
-
-.asset-grid {
-  display: flex; flex-wrap: wrap; gap: 8px;
-}
-
-.asset-btn {
-  display: flex; align-items: center; gap: 8px;
-  padding: 9px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text2);
-  cursor: pointer;
-  font-family: var(--body);
-  font-size: 13px;
-  font-weight: 500;
-  transition: all .15s;
-  position: relative;
-  overflow: hidden;
-}
-
-.asset-btn:hover {
-  border-color: var(--border2);
-  color: var(--text);
-  background: var(--surface2);
-}
-
-.asset-btn.active {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(200,255,0,0.06);
-}
-
-.asset-btn .ticker {
-  font-family: var(--mono);
-  font-size: 11px;
-  opacity: .5;
-}
-
-.asset-icon {
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-
-/* ── Main dashboard grid ──────────────────────────────────── */
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  grid-template-rows: auto auto;
-  gap: 16px;
-}
-
-@media (max-width: 800px) {
-  .dashboard { grid-template-columns: 1fr; }
-}
-
-/* ── Score card ───────────────────────────────────────────── */
-.score-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px;
-  position: relative;
-  overflow: hidden;
-  grid-row: 1 / 2;
-}
-
-.score-card::before {
-  content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 300px; height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--zone-color, rgba(200,255,0,0.08)) 0%, transparent 70%);
-  pointer-events: none;
-  transition: background .6s ease;
-}
-
-.score-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 36px;
-}
-
-.asset-info { }
-
-.asset-name {
-  font-family: var(--display);
-  font-size: 36px;
-  letter-spacing: .04em;
-  line-height: 1;
-  margin-bottom: 4px;
-  transition: color .4s;
-}
-
-.asset-ticker-display {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text3);
-  letter-spacing: .1em;
-}
-
-.zone-pill {
-  display: flex; align-items: center; gap: 7px;
-  padding: 6px 14px;
-  border-radius: 30px;
-  border: 1px solid;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  transition: all .4s;
-}
-
-.zone-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  transition: background .4s;
-}
-
-/* ── Big score display ────────────────────────────────────── */
-.score-display {
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.score-big {
-  font-family: var(--display);
-  font-size: clamp(80px, 12vw, 128px);
-  line-height: .85;
-  letter-spacing: -.01em;
-  transition: color .4s;
-}
-
-.score-meta {
-  padding-bottom: 12px;
-}
-
-.score-range {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-  margin-bottom: 6px;
-}
-
-.score-desc {
-  font-size: 14px;
-  color: var(--text2);
-  max-width: 200px;
-  line-height: 1.4;
-}
-
-/* ── Gauge bar ────────────────────────────────────────────── */
-.gauge-wrap {
-  margin-bottom: 32px;
-}
-
-.gauge-track {
-  height: 6px;
-  background: var(--surface3);
-  border-radius: 3px;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-
-.gauge-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width .8s cubic-bezier(.4,0,.2,1), background .4s;
-  position: relative;
-}
-
-.gauge-fill::after {
-  content: '';
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 0 8px #fff;
-}
-
-.gauge-labels {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-}
-
-/* ── Copy button ──────────────────────────────────────────── */
-.copy-row {
-  display: flex; gap: 10px; align-items: center;
-}
-
-.copy-btn {
-  flex: 1;
-  padding: 14px 20px;
-  border-radius: 10px;
-  border: none;
-  font-family: var(--body);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: all .15s;
-  letter-spacing: .01em;
-}
-
-.copy-btn:hover { opacity: .88; transform: translateY(-1px); }
-.copy-btn:active { transform: translateY(0) scale(.98); }
-
-.copy-btn svg { width: 16px; height: 16px; }
-
-.tv-btn {
-  padding: 14px 18px;
-  border-radius: 10px;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  color: var(--text2);
-  font-family: var(--mono);
-  font-size: 11px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all .15s;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  display: flex; align-items: center; gap: 6px;
-}
-
-.tv-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-/* ── Side panel ───────────────────────────────────────────── */
-.side-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  grid-row: 1 / 3;
-}
-
-@media (max-width: 800px) {
-  .side-panel { grid-row: auto; }
-}
-
-/* ── Component breakdown ──────────────────────────────────── */
-.panel-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-}
-
-.panel-title {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 20px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.source-rows { display: flex; flex-direction: column; gap: 14px; }
-
-.src-row { }
-
-.src-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.src-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.src-val {
-  font-family: var(--mono);
-  font-size: 12px;
-}
-
-.src-track {
-  height: 3px;
-  background: var(--surface3);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.src-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width .8s cubic-bezier(.4,0,.2,1) .1s;
-}
-
-/* ── Zone guide ───────────────────────────────────────────── */
-.zone-list { display: flex; flex-direction: column; gap: 8px; }
-
-.zone-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: var(--surface2);
-  transition: background .15s;
-  cursor: default;
-}
-
-.zone-item.current {
-  background: var(--surface3);
-  box-shadow: inset 0 0 0 1px var(--border2);
-}
-
-.z-dot {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-}
-
-.z-name {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .06em;
-  flex: 1;
-}
-
-.z-range {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-}
-
-/* ── TradingView instructions ─────────────────────────────── */
-.tv-steps {
-  display: flex; flex-direction: column; gap: 10px;
-}
-
-.tv-step {
-  display: flex; gap: 10px; align-items: flex-start;
-}
-
-.step-num {
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  background: var(--surface3);
-  border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.step-text {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.4;
-}
-
-.step-text strong { color: var(--text); font-weight: 600; }
-
-/* ── Bottom bar ───────────────────────────────────────────── */
-.bottom-cards {
-  grid-column: 1 / 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 600px) {
-  .bottom-cards { grid-template-columns: 1fr; }
-}
-
-.stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-}
-
-.stat-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 10px;
-}
-
-.stat-value {
-  font-family: var(--display);
-  font-size: 36px;
-  line-height: 1;
-  letter-spacing: .04em;
-  margin-bottom: 4px;
-}
-
-.stat-sub {
-  font-size: 12px;
-  color: var(--text2);
-}
-
-/* ── Timestamp / footer ───────────────────────────────────── */
-.footer-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* ── Loading / error ──────────────────────────────────────── */
-.loading-state {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  height: 260px; gap: 14px;
-}
-
-.spinner {
-  width: 32px; height: 32px;
-  border: 2px solid var(--surface3);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.loading-txt {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text3);
-  letter-spacing: .1em;
-}
-
-.error-txt {
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--ef);
-  text-align: center;
-  padding: 40px 20px;
-  line-height: 1.6;
-}
-
-/* ── Animations ───────────────────────────────────────────── */
-@keyframes fadeup {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-.score-card, .side-panel, .bottom-cards {
-  animation: fadeup .5s ease both;
-}
-.side-panel  { animation-delay: .1s; }
-.bottom-cards{ animation-delay: .15s; }
-
-/* ── Copied toast ─────────────────────────────────────────── */
-.toast {
-  position: fixed;
-  bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: var(--accent);
-  color: #000;
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 12px 24px;
-  border-radius: 30px;
-  z-index: 999;
-  transition: transform .3s cubic-bezier(.4,0,.2,1);
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.toast.show { transform: translateX(-50%) translateY(0); }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07080c;--surface:#0e1018;--surface2:#13151f;--surface3:#191c28;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --text:#dde1ec;--text2:#7a819a;--text3:#3d4257;
+  --accent:#c8ff00;
+  --mono:'DM Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Instrument Sans',sans-serif;
+  --eg:#00e676;--g:#00bfa5;--n:#546e7a;--f:#ffab40;--ef:#ff5252;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.45}
+.shell{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 28px 80px}
+
+/* Topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:28px 0 0;margin-bottom:56px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-text{font-family:var(--display);font-size:22px;letter-spacing:.1em}
+.logo-sub{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-top:-2px}
+.live-badge{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border2);border-radius:30px;padding:6px 14px;font-family:var(--mono);font-size:11px;color:var(--text2)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:livepulse 2s infinite}
+@keyframes livepulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(200,255,0,.4)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(200,255,0,0)}}
+
+/* Hero */
+.hero{margin-bottom:48px}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::after{content:'';flex:1;max-width:48px;height:1px;background:var(--accent)}
+.hero h1{font-family:var(--display);font-size:clamp(52px,8vw,96px);line-height:.92;letter-spacing:.02em;color:#fff;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.25)}
+.hero-sub{font-size:15px;color:var(--text2);max-width:480px}
+
+/* Selector */
+.selector-section{margin-bottom:40px}
+.selector-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+.category-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.cat-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s}
+.cat-btn:hover{border-color:var(--border2);color:var(--text2)}
+.cat-btn.active{background:var(--accent);border-color:var(--accent);color:#000}
+.asset-grid{display:flex;flex-wrap:wrap;gap:8px}
+.asset-btn{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;font-family:var(--body);font-size:13px;font-weight:500;transition:all .15s;position:relative}
+.asset-btn:hover{border-color:var(--border2);color:var(--text);background:var(--surface2)}
+.asset-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,255,0,.06)}
+.asset-btn .ticker{font-family:var(--mono);font-size:11px;opacity:.5}
+.asset-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+/* mini score on asset button */
+.asset-mini-score{font-family:var(--mono);font-size:10px;margin-left:auto;padding:1px 5px;border-radius:3px;font-weight:500}
+
+/* Dashboard grid */
+.dashboard{display:grid;grid-template-columns:1fr 340px;grid-template-rows:auto auto;gap:16px}
+@media(max-width:800px){.dashboard{grid-template-columns:1fr}}
+
+/* Score card */
+.score-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;position:relative;overflow:hidden;grid-row:1/2;transition:border-color .4s}
+.score-card::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,var(--glow,rgba(200,255,0,.08)) 0%,transparent 70%);pointer-events:none;transition:background .6s}
+.score-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px}
+.asset-name{font-family:var(--display);font-size:36px;letter-spacing:.04em;line-height:1;margin-bottom:4px;transition:color .4s}
+.asset-ticker-display{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.1em}
+.zone-pill{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:30px;border:1px solid;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:all .4s}
+.zone-dot{width:7px;height:7px;border-radius:50%;transition:background .4s}
+.score-display{display:flex;align-items:flex-end;gap:20px;margin-bottom:32px}
+.score-big{font-family:var(--display);font-size:clamp(80px,12vw,128px);line-height:.85;letter-spacing:-.01em;transition:color .4s}
+.score-meta{padding-bottom:12px}
+.score-range{font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:6px}
+.score-desc{font-size:14px;color:var(--text2);max-width:200px;line-height:1.4}
+.gauge-wrap{margin-bottom:32px}
+.gauge-track{height:6px;background:var(--surface3);border-radius:3px;position:relative;overflow:hidden;margin-bottom:8px}
+.gauge-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.4,0,.2,1),background .4s;position:relative}
+.gauge-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:#fff;border-radius:2px;box-shadow:0 0 8px #fff}
+.gauge-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3)}
+.copy-row{display:flex;gap:10px;align-items:center}
+.copy-btn{flex:1;padding:14px 20px;border-radius:10px;border:none;font-family:var(--body);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s;letter-spacing:.01em}
+.copy-btn:hover{opacity:.88;transform:translateY(-1px)}
+.copy-btn:active{transform:translateY(0) scale(.98)}
+.tv-btn{padding:14px 18px;border-radius:10px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .15s;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.tv-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Side panel */
+.side-panel{display:flex;flex-direction:column;gap:16px;grid-row:1/3}
+@media(max-width:800px){.side-panel{grid-row:auto}}
+.panel-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+.panel-title{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.source-rows{display:flex;flex-direction:column;gap:14px}
+.src-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.src-name{font-size:13px;font-weight:500;color:var(--text)}
+.src-val{font-family:var(--mono);font-size:12px}
+.src-track{height:3px;background:var(--surface3);border-radius:2px;overflow:hidden}
+.src-fill{height:100%;border-radius:2px;transition:width .8s cubic-bezier(.4,0,.2,1) .1s}
+
+/* Zone list */
+.zone-list{display:flex;flex-direction:column;gap:8px}
+.zone-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--surface2);transition:background .15s}
+.zone-item.current{background:var(--surface3);box-shadow:inset 0 0 0 1px var(--border2)}
+.z-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.z-name{font-family:var(--mono);font-size:11px;letter-spacing:.06em;flex:1}
+.z-range{font-family:var(--mono);font-size:10px;color:var(--text3)}
+
+/* TV steps */
+.tv-steps{display:flex;flex-direction:column;gap:10px}
+.tv-step{display:flex;gap:10px;align-items:flex-start}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--surface3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--text3);flex-shrink:0;margin-top:1px}
+.step-text{font-size:13px;color:var(--text2);line-height:1.4}
+.step-text strong{color:var(--text);font-weight:600}
+
+/* Bottom stats */
+.bottom-cards{grid-column:1/2;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.bottom-cards{grid-template-columns:1fr}}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+.stat-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.stat-value{font-family:var(--display);font-size:36px;line-height:1;letter-spacing:.04em;margin-bottom:4px}
+.stat-sub{font-size:12px;color:var(--text2)}
+
+/* Footer */
+.footer-bar{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text3);flex-wrap:wrap;gap:8px}
+
+/* Loading */
+.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:260px;gap:14px}
+.spinner{width:32px;height:32px;border:2px solid var(--surface3);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.1em}
+.error-txt{font-family:var(--mono);font-size:13px;color:var(--ef);text-align:center;padding:40px 20px;line-height:1.6}
+
+/* Animations */
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.score-card,.side-panel,.bottom-cards{animation:fadeup .5s ease both}
+.side-panel{animation-delay:.1s}.bottom-cards{animation-delay:.15s}
+
+/* Toast */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent);color:#000;font-family:var(--mono);font-size:13px;font-weight:500;padding:12px 24px;border-radius:30px;z-index:999;transition:transform .3s cubic-bezier(.4,0,.2,1);pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Leaderboard strip */
+.leaders{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px}
+.leader-chip{flex-shrink:0;display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:12px;cursor:pointer;transition:all .15s;font-family:var(--mono)}
+.leader-chip:hover{border-color:var(--border2)}
+.leader-chip.bull{border-color:rgba(0,200,150,.3);background:rgba(0,200,150,.05)}
+.leader-chip.bear{border-color:rgba(255,82,82,.3);background:rgba(255,82,82,.05)}
+.leader-chip .lc-score{font-size:13px;font-weight:500}
+.leader-chip .lc-name{color:var(--text3);font-size:10px}
 </style>
 </head>
 <body>
 
-<div class="toast" id="toast">✓ Score copied — paste into TradingView</div>
+<div class="toast" id="toast"></div>
 
 <div class="shell">
 
-  <!-- ── Topbar ──────────────────────────────────────────── -->
   <div class="topbar">
     <div class="logo">
       <div class="logo-mark">
-        <svg viewBox="0 0 20 20" fill="none">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M10 2L3 7v6l7 5 7-5V7L10 2z" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
           <path d="M10 2v16M3 7l7 5 7-5" stroke="#000" stroke-width="1.5"/>
         </svg>
@@ -711,21 +170,25 @@ body::before {
     </div>
     <div class="live-badge">
       <div class="live-dot"></div>
-      <span id="live-txt">Connecting...</span>
+      <span id="live-txt">Loading...</span>
     </div>
   </div>
 
-  <!-- ── Hero ────────────────────────────────────────────── -->
   <div class="hero">
     <div class="hero-eyebrow">AI Sentiment Oscillator</div>
     <h1>MARKET<br><em>MIND</em></h1>
-    <p class="hero-sub">Real-time crowd psychology intelligence across crypto, equities, commodities and forex. Select a market below.</p>
+    <p class="hero-sub">Real-time crowd psychology across 14 markets. Select any asset to see its sentiment score and copy it directly into TradingView.</p>
   </div>
 
-  <!-- ── Market selector ─────────────────────────────────── -->
+  <!-- Top movers -->
+  <div id="leaders-wrap" style="display:none">
+    <div class="selector-label" style="margin-bottom:10px">Top movers</div>
+    <div class="leaders" id="leaders"></div>
+  </div>
+
+  <!-- Market selector -->
   <div class="selector-section">
     <div class="selector-label">Select market</div>
-
     <div class="category-tabs" id="cat-tabs">
       <button class="cat-btn active" onclick="filterCat('all',this)">All</button>
       <button class="cat-btn" onclick="filterCat('crypto',this)">Crypto</button>
@@ -733,408 +196,348 @@ body::before {
       <button class="cat-btn" onclick="filterCat('commodity',this)">Commodities</button>
       <button class="cat-btn" onclick="filterCat('forex',this)">Forex</button>
     </div>
-
     <div class="asset-grid" id="asset-grid"></div>
   </div>
 
-  <!-- ── Dashboard ───────────────────────────────────────── -->
+  <!-- Dashboard -->
   <div class="dashboard">
 
-    <!-- Score card -->
     <div class="score-card" id="score-card">
       <div class="loading-state">
         <div class="spinner"></div>
-        <div class="loading-txt">Loading score...</div>
+        <div class="loading-txt">Fetching all market scores...</div>
       </div>
     </div>
 
-    <!-- Bottom stats -->
     <div class="bottom-cards" id="bottom-cards" style="display:none">
       <div class="stat-card">
-        <div class="stat-label">Fear &amp; Greed Index</div>
+        <div class="stat-label">F&amp;G / Sentiment Index</div>
         <div class="stat-value" id="fg-val" style="color:var(--accent)">—</div>
-        <div class="stat-sub" id="fg-lbl">Fetching...</div>
+        <div class="stat-sub" id="fg-lbl">—</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Reddit Sentiment</div>
+        <div class="stat-label">Reddit Signal</div>
         <div class="stat-value" id="reddit-val" style="color:var(--accent)">—</div>
-        <div class="stat-sub" id="reddit-sub">Social signal</div>
+        <div class="stat-sub" id="reddit-sub">Community sentiment</div>
       </div>
     </div>
 
-    <!-- Side panel -->
     <div class="side-panel">
 
-      <!-- Source breakdown -->
       <div class="panel-card" id="breakdown-card">
-        <div class="panel-title">
-          <span>Source breakdown</span>
-          <span id="weight-note" style="font-size:9px"></span>
-        </div>
+        <div class="panel-title"><span>Source breakdown</span></div>
         <div class="source-rows" id="source-rows">
-          <div style="color:var(--text3);font-size:13px">Select an asset above</div>
+          <div style="color:var(--text3);font-size:13px">Loading scores...</div>
         </div>
       </div>
 
-      <!-- Zone guide -->
       <div class="panel-card">
         <div class="panel-title">Zone reference</div>
-        <div class="zone-list" id="zone-list">
-          <div class="zone-item" id="z-eg">
-            <div class="z-dot" style="background:var(--eg)"></div>
-            <div class="z-name" style="color:var(--eg)">EXTREME GREED</div>
-            <div class="z-range">+60→100</div>
-          </div>
-          <div class="zone-item" id="z-g">
-            <div class="z-dot" style="background:var(--g)"></div>
-            <div class="z-name" style="color:var(--g)">GREED</div>
-            <div class="z-range">+20→60</div>
-          </div>
-          <div class="zone-item" id="z-n">
-            <div class="z-dot" style="background:var(--n)"></div>
-            <div class="z-name" style="color:var(--n)">NEUTRAL</div>
-            <div class="z-range">-20→+20</div>
-          </div>
-          <div class="zone-item" id="z-f">
-            <div class="z-dot" style="background:var(--f)"></div>
-            <div class="z-name" style="color:var(--f)">FEAR</div>
-            <div class="z-range">-60→-20</div>
-          </div>
-          <div class="zone-item" id="z-ef">
-            <div class="z-dot" style="background:var(--ef)"></div>
-            <div class="z-name" style="color:var(--ef)">EXTREME FEAR</div>
-            <div class="z-range">-100→-60</div>
-          </div>
+        <div class="zone-list">
+          <div class="zone-item" id="z-eg"><div class="z-dot" style="background:var(--eg)"></div><div class="z-name" style="color:var(--eg)">EXTREME GREED</div><div class="z-range">+60→100</div></div>
+          <div class="zone-item" id="z-g"><div class="z-dot" style="background:var(--g)"></div><div class="z-name" style="color:var(--g)">GREED</div><div class="z-range">+20→60</div></div>
+          <div class="zone-item" id="z-n"><div class="z-dot" style="background:var(--n)"></div><div class="z-name" style="color:var(--n)">NEUTRAL</div><div class="z-range">-20→+20</div></div>
+          <div class="zone-item" id="z-f"><div class="z-dot" style="background:var(--f)"></div><div class="z-name" style="color:var(--f)">FEAR</div><div class="z-range">-60→-20</div></div>
+          <div class="zone-item" id="z-ef"><div class="z-dot" style="background:var(--ef)"></div><div class="z-name" style="color:var(--ef)">EXTREME FEAR</div><div class="z-range">-100→-60</div></div>
         </div>
       </div>
 
-      <!-- TradingView steps -->
       <div class="panel-card">
         <div class="panel-title">Apply in TradingView</div>
         <div class="tv-steps">
-          <div class="tv-step">
-            <div class="step-num">1</div>
-            <div class="step-text">Click <strong>Copy Score</strong> in the score card</div>
-          </div>
-          <div class="tv-step">
-            <div class="step-num">2</div>
-            <div class="step-text">Open AISO indicator → right-click → <strong>Settings</strong></div>
-          </div>
-          <div class="tv-step">
-            <div class="step-num">3</div>
-            <div class="step-text">Enable <strong>Manual Bias</strong> toggle</div>
-          </div>
-          <div class="tv-step">
-            <div class="step-num">4</div>
-            <div class="step-text">Paste number into <strong>Bias Score</strong> → OK</div>
-          </div>
+          <div class="tv-step"><div class="step-num">1</div><div class="step-text">Click <strong>Copy Score</strong> in the score card</div></div>
+          <div class="tv-step"><div class="step-num">2</div><div class="step-text">Open AISO → right-click → <strong>Settings</strong></div></div>
+          <div class="tv-step"><div class="step-num">3</div><div class="step-text">Enable <strong>Manual Bias</strong> toggle</div></div>
+          <div class="tv-step"><div class="step-num">4</div><div class="step-text">Paste into <strong>Bias Score</strong> → OK</div></div>
         </div>
       </div>
 
-    </div><!-- /side-panel -->
-
-  </div><!-- /dashboard -->
-
-  <!-- ── Footer ──────────────────────────────────────────── -->
-  <div class="footer-bar">
-    <span id="ts-label">—</span>
-    <span>Auto-refreshes every 5 minutes · GitHub Actions hourly</span>
+    </div>
   </div>
 
-</div><!-- /shell -->
+  <div class="footer-bar">
+    <span id="ts-label">—</span>
+    <span>Auto-refreshes every 5 min · GitHub Actions updates hourly</span>
+  </div>
+
+</div>
 
 <script>
-// ── Asset catalogue ──────────────────────────────────────────
-const ASSETS = [
-  { key:'BTC',    label:'Bitcoin',        ticker:'BTC',    cat:'crypto',    icon:'₿',  iconBg:'#f7931a22', iconCol:'#f7931a' },
-  { key:'ETH',    label:'Ethereum',       ticker:'ETH',    cat:'crypto',    icon:'Ξ',  iconBg:'#627eea22', iconCol:'#627eea' },
-  { key:'SOL',    label:'Solana',         ticker:'SOL',    cat:'crypto',    icon:'◎',  iconBg:'#9945ff22', iconCol:'#9945ff' },
-  { key:'SPY',    label:'S&P 500',        ticker:'SPY',    cat:'stocks',    icon:'$',  iconBg:'#00897b22', iconCol:'#00897b' },
-  { key:'QQQ',    label:'Nasdaq 100',     ticker:'QQQ',    cat:'stocks',    icon:'Q',  iconBg:'#1e88e522', iconCol:'#1e88e5' },
-  { key:'NVDA',   label:'Nvidia',         ticker:'NVDA',   cat:'stocks',    icon:'N',  iconBg:'#76b90022', iconCol:'#76b900' },
-  { key:'TSLA',   label:'Tesla',          ticker:'TSLA',   cat:'stocks',    icon:'T',  iconBg:'#cc000022', iconCol:'#cc0000' },
-  { key:'MSTR',   label:'MicroStrategy',  ticker:'MSTR',   cat:'stocks',    icon:'M',  iconBg:'#f7931a22', iconCol:'#f7931a' },
-  { key:'GOLD',   label:'Gold',           ticker:'XAU',    cat:'commodity', icon:'◈',  iconBg:'#ffd70022', iconCol:'#ffd700' },
-  { key:'SILVER', label:'Silver',         ticker:'XAG',    cat:'commodity', icon:'◇',  iconBg:'#c0c0c022', iconCol:'#c0c0c0' },
-  { key:'OIL',    label:'Crude Oil',      ticker:'WTI',    cat:'commodity', icon:'◉',  iconBg:'#37474f22', iconCol:'#78909c' },
-  { key:'EURUSD', label:'EUR / USD',      ticker:'EUR',    cat:'forex',     icon:'€',  iconBg:'#1565c022', iconCol:'#42a5f5' },
-  { key:'GBPUSD', label:'GBP / USD',      ticker:'GBP',    cat:'forex',     icon:'£',  iconBg:'#6a1b9a22', iconCol:'#ab47bc' },
-  { key:'USDJPY', label:'USD / JPY',      ticker:'JPY',    cat:'forex',     icon:'¥',  iconBg:'#b71c1c22', iconCol:'#ef5350' },
-];
+// ── Config ───────────────────────────────────────────────────
+const ASSET_META = {
+  BTC:    {label:"Bitcoin",       ticker:"BTC", cat:"crypto",    icon:"₿",  iconBg:"#f7931a22",iconCol:"#f7931a"},
+  ETH:    {label:"Ethereum",      ticker:"ETH", cat:"crypto",    icon:"Ξ",  iconBg:"#627eea22",iconCol:"#627eea"},
+  SOL:    {label:"Solana",        ticker:"SOL", cat:"crypto",    icon:"◎",  iconBg:"#9945ff22",iconCol:"#9945ff"},
+  SPY:    {label:"S&P 500",       ticker:"SPY", cat:"stocks",    icon:"$",  iconBg:"#00897b22",iconCol:"#00897b"},
+  QQQ:    {label:"Nasdaq 100",    ticker:"QQQ", cat:"stocks",    icon:"Q",  iconBg:"#1e88e522",iconCol:"#1e88e5"},
+  NVDA:   {label:"Nvidia",        ticker:"NVDA",cat:"stocks",    icon:"N",  iconBg:"#76b90022",iconCol:"#76b900"},
+  TSLA:   {label:"Tesla",         ticker:"TSLA",cat:"stocks",    icon:"T",  iconBg:"#cc000022",iconCol:"#cc0000"},
+  MSTR:   {label:"MicroStrategy", ticker:"MSTR",cat:"stocks",    icon:"M",  iconBg:"#f7931a22",iconCol:"#f7931a"},
+  GOLD:   {label:"Gold",          ticker:"XAU", cat:"commodity", icon:"◈",  iconBg:"#ffd70022",iconCol:"#ffd700"},
+  SILVER: {label:"Silver",        ticker:"XAG", cat:"commodity", icon:"◇",  iconBg:"#c0c0c022",iconCol:"#c0c0c0"},
+  OIL:    {label:"Crude Oil",     ticker:"WTI", cat:"commodity", icon:"◉",  iconBg:"#37474f22",iconCol:"#78909c"},
+  EURUSD: {label:"EUR / USD",     ticker:"EUR", cat:"forex",     icon:"€",  iconBg:"#1565c022",iconCol:"#42a5f5"},
+  GBPUSD: {label:"GBP / USD",     ticker:"GBP", cat:"forex",     icon:"£",  iconBg:"#6a1b9a22",iconCol:"#ab47bc"},
+  USDJPY: {label:"USD / JPY",     ticker:"JPY", cat:"forex",     icon:"¥",  iconBg:"#b71c1c22",iconCol:"#ef5350"},
+};
 
-// ── Zone config ──────────────────────────────────────────────
 const ZONE_CFG = {
-  'EXTREME GREED': { color:'var(--eg)', desc:'Overheated — reversal risk',      id:'z-eg' },
-  'GREED'        : { color:'var(--g)',  desc:'Bullish bias — favour longs',      id:'z-g'  },
-  'NEUTRAL'      : { color:'var(--n)', desc:'No edge — rely on price structure', id:'z-n'  },
-  'FEAR'         : { color:'var(--f)', desc:'Bearish bias — caution on longs',   id:'z-f'  },
-  'EXTREME FEAR' : { color:'var(--ef)',desc:'Capitulation — watch for bottom',   id:'z-ef' },
+  "EXTREME GREED":{color:"var(--eg)",desc:"Overheated — reversal risk",      id:"z-eg"},
+  "GREED"        :{color:"var(--g)", desc:"Bullish bias — favour longs",      id:"z-g"},
+  "NEUTRAL"      :{color:"var(--n)", desc:"No edge — rely on price structure", id:"z-n"},
+  "FEAR"         :{color:"var(--f)", desc:"Bearish bias — caution on longs",   id:"z-f"},
+  "EXTREME FEAR" :{color:"var(--ef)",desc:"Capitulation — watch for bottom",   id:"z-ef"},
 };
 
 // ── State ────────────────────────────────────────────────────
-let currentAsset = 'BTC';
-let currentCat   = 'all';
-let currentData  = null;
+let allScores    = {};      // key → asset data object
+let currentAsset = "BTC";
+let currentCat   = "all";
 let refreshTimer = null;
 
-// ── Build asset buttons ──────────────────────────────────────
-function buildAssetGrid(cat) {
-  const grid = document.getElementById('asset-grid');
-  const list = cat === 'all' ? ASSETS : ASSETS.filter(a => a.cat === cat);
-  grid.innerHTML = list.map(a => `
-    <button class="asset-btn ${a.key === currentAsset ? 'active' : ''}"
-            id="ab-${a.key}"
-            onclick="selectAsset('${a.key}')">
-      <div class="asset-icon" style="background:${a.iconBg};color:${a.iconCol}">${a.icon}</div>
-      <span>${a.label}</span>
-      <span class="ticker">${a.ticker}</span>
-    </button>
-  `).join('');
+// ── Helpers ──────────────────────────────────────────────────
+const signed   = v => (parseFloat(v) >= 0 ? "+" : "") + parseFloat(v).toFixed(1);
+const gaugePct = s => Math.round((s + 100) / 2) + "%";
+const srcPct   = v => Math.round((parseFloat(v) + 100) / 2) + "%";
+
+function zCol(zone) {
+  const z = (zone||"NEUTRAL").toUpperCase();
+  return (ZONE_CFG[z]||ZONE_CFG["NEUTRAL"]).color;
+}
+
+function fmtTs(iso) {
+  try {
+    const d = new Date(iso);
+    return "Updated " + d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})
+           + " · " + d.toLocaleDateString([],{weekday:"short",month:"short",day:"numeric"});
+  } catch { return iso; }
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+// ── Build leaders strip ───────────────────────────────────────
+function buildLeaders(assets) {
+  const sorted = Object.values(assets).sort((a,b) => b.composite - a.composite);
+  const top    = [...sorted.slice(0,3), ...sorted.slice(-3).reverse()];
+  const wrap   = document.getElementById("leaders-wrap");
+  const strip  = document.getElementById("leaders");
+  wrap.style.display = "block";
+  strip.innerHTML = top.map(d => {
+    const meta  = ASSET_META[d.asset] || {};
+    const s     = d.composite;
+    const bull  = s >= 20;
+    const bear  = s <= -20;
+    const col   = s >= 20 ? "var(--g)" : s <= -20 ? "var(--ef)" : "var(--n)";
+    return `<div class="leader-chip ${bull?"bull":bear?"bear":""}" onclick="selectAsset('${d.asset}')">
+      <div class="asset-icon" style="background:${meta.iconBg||"#fff2"};color:${meta.iconCol||"#fff"};width:18px;height:18px;font-size:10px">${meta.icon||"?"}</div>
+      <div>
+        <div class="lc-score" style="color:${col}">${signed(s)}</div>
+        <div class="lc-name">${d.asset}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ── Build asset grid buttons ──────────────────────────────────
+function buildGrid(cat) {
+  const grid = document.getElementById("asset-grid");
+  const keys = Object.keys(ASSET_META).filter(k => cat === "all" || ASSET_META[k].cat === cat);
+  grid.innerHTML = keys.map(key => {
+    const m     = ASSET_META[key];
+    const d     = allScores[key];
+    const s     = d ? d.composite : null;
+    const col   = d ? zCol(d.zone) : "var(--text3)";
+    const mini  = s !== null
+      ? `<span class="asset-mini-score" style="color:${col};background:${col}18">${signed(s)}</span>`
+      : "";
+    return `<button class="asset-btn ${key===currentAsset?"active":""}" id="ab-${key}" onclick="selectAsset('${key}')">
+      <div class="asset-icon" style="background:${m.iconBg};color:${m.iconCol}">${m.icon}</div>
+      <span>${m.label}</span>
+      <span class="ticker">${m.ticker}</span>
+      ${mini}
+    </button>`;
+  }).join("");
 }
 
 function filterCat(cat, btn) {
   currentCat = cat;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  buildAssetGrid(cat);
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  buildGrid(cat);
 }
 
-// ── Select asset ─────────────────────────────────────────────
-function selectAsset(key) {
-  currentAsset = key;
-  document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('ab-' + key);
-  if(btn) btn.classList.add('active');
-  loadScore(key);
-}
+// ── Render score card for selected asset ──────────────────────
+function renderScore(key) {
+  const data = allScores[key];
+  const meta = ASSET_META[key] || {};
+  const card = document.getElementById("score-card");
 
-// ── Gauge percentage (score -100→+100 maps to 0%→100%) ──────
-function gaugePct(score) {
-  return Math.round((score + 100) / 2) + '%';
-}
+  if(!data) {
+    card.innerHTML = `<div class="error-txt">
+      ⚠ No score yet for ${key}<br>
+      <span style="font-size:11px;color:var(--text3);margin-top:8px;display:block">
+        Run: python3 fetcher_v2.py --all<br>then push scores/${key}.json to your repo
+      </span></div>`;
+    return;
+  }
 
-// ── Source bar pct ───────────────────────────────────────────
-function srcPct(val) {
-  return Math.round((parseFloat(val) + 100) / 2) + '%';
-}
-
-// ── Format number with sign ──────────────────────────────────
-function signed(v) {
-  const n = parseFloat(v);
-  return (n >= 0 ? '+' : '') + n.toFixed(1);
-}
-
-// ── Format timestamp ─────────────────────────────────────────
-function fmtTs(iso) {
-  try {
-    const d = new Date(iso);
-    return 'Updated ' + d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })
-           + ' · ' + d.toLocaleDateString([], { weekday:'short', month:'short', day:'numeric' });
-  } catch { return iso; }
-}
-
-// ── Zone colour string ───────────────────────────────────────
-function zoneColor(zone) {
-  return (ZONE_CFG[zone.toUpperCase()] || ZONE_CFG['NEUTRAL']).color;
-}
-
-// ── Render score card ────────────────────────────────────────
-function renderScore(data) {
-  const asset = ASSETS.find(a => a.key === currentAsset) || ASSETS[0];
-  const score = parseFloat(data.composite);
-  const zone  = (data.zone || 'NEUTRAL').toUpperCase();
-  const zCfg  = ZONE_CFG[zone] || ZONE_CFG['NEUTRAL'];
-  const pct   = gaugePct(score);
+  const score  = parseFloat(data.composite);
+  const zone   = (data.zone||"NEUTRAL").toUpperCase();
+  const zCfg   = ZONE_CFG[zone] || ZONE_CFG["NEUTRAL"];
+  const pct    = gaugePct(score);
   const scores = data.scores || {};
-
-  // Zone gradient on card
-  const card = document.getElementById('score-card');
-  card.style.setProperty('--zone-color', zCfg.color.replace('var(--','').replace(')',''));
 
   card.innerHTML = `
     <div class="score-card-top">
-      <div class="asset-info">
-        <div class="asset-name" style="color:${asset.iconCol}">${asset.label}</div>
-        <div class="asset-ticker-display">${asset.ticker} · ${(data.category||'').toUpperCase()}</div>
+      <div>
+        <div class="asset-name" style="color:${meta.iconCol||zCfg.color}">${meta.label||key}</div>
+        <div class="asset-ticker-display">${meta.ticker||key} · ${(data.category||"").toUpperCase()}</div>
       </div>
       <div class="zone-pill" style="border-color:${zCfg.color};color:${zCfg.color}">
-        <div class="zone-dot" style="background:${zCfg.color}"></div>
-        ${zone}
+        <div class="zone-dot" style="background:${zCfg.color}"></div>${zone}
       </div>
     </div>
-
     <div class="score-display">
       <div class="score-big" style="color:${zCfg.color}">${signed(score)}</div>
       <div class="score-meta">
-        <div class="score-range">Range: −100 → +100</div>
+        <div class="score-range">Range −100 → +100</div>
         <div class="score-desc">${zCfg.desc}</div>
       </div>
     </div>
-
     <div class="gauge-wrap">
       <div class="gauge-track">
         <div class="gauge-fill" style="width:${pct};background:${zCfg.color}"></div>
       </div>
       <div class="gauge-labels">
-        <span>−100 Extreme Fear</span>
-        <span>0</span>
-        <span>Extreme Greed +100</span>
+        <span>−100 Extreme Fear</span><span>0</span><span>Extreme Greed +100</span>
       </div>
     </div>
-
     <div class="copy-row">
       <button class="copy-btn" id="copy-main"
-        style="background:${zCfg.color};color:${zone==='NEUTRAL'?'#fff':'#000'}"
+        style="background:${zCfg.color};color:${zone==="NEUTRAL"?"#fff":"#000"}"
         onclick="copyScore(${score})">
-        <svg viewBox="0 0 16 16" fill="none">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
           <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/>
         </svg>
         Copy Score to Clipboard
       </button>
-      <button class="tv-btn" onclick="showTVHint()">
+      <button class="tv-btn" onclick="showToast('AISO Settings → Enable Manual Bias → Paste number')">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M7 1l6 3.5v5L7 13 1 9.5v-5L7 1z" stroke="currentColor" stroke-width="1.2"/>
         </svg>
         TV Steps
       </button>
-    </div>
-  `;
+    </div>`;
 
-  // Highlight current zone
-  document.querySelectorAll('.zone-item').forEach(z => z.classList.remove('current'));
+  // Zone highlight
+  document.querySelectorAll(".zone-item").forEach(z => z.classList.remove("current"));
   const zEl = document.getElementById(zCfg.id);
-  if(zEl) zEl.classList.add('current');
+  if(zEl) zEl.classList.add("current");
 
-  // Source breakdown
-  const srcRows = document.getElementById('source-rows');
-  const srcHtml = Object.entries(scores).map(([k, v]) => {
-    const lbl  = k === 'fear_greed' ? 'F&G Index' : k.charAt(0).toUpperCase() + k.slice(1);
-    const num  = parseFloat(v);
-    const col  = num >= 20 ? 'var(--g)' : num >= 0 ? '#7a9' : num >= -20 ? 'var(--n)' : num >= -60 ? 'var(--f)' : 'var(--ef)';
-    return `
-      <div class="src-row">
-        <div class="src-top">
-          <span class="src-name">${lbl}</span>
-          <span class="src-val" style="color:${col}">${signed(num)}</span>
-        </div>
-        <div class="src-track">
-          <div class="src-fill" style="width:${srcPct(num)};background:${col}"></div>
-        </div>
-      </div>`;
-  }).join('');
-  srcRows.innerHTML = srcHtml || '<div style="color:var(--text3);font-size:13px">No breakdown available</div>';
+  // Breakdown
+  document.getElementById("source-rows").innerHTML = Object.entries(scores).map(([k,v]) => {
+    const lbl = k === "fear_greed" ? "F&G Index" : k.charAt(0).toUpperCase()+k.slice(1);
+    const n   = parseFloat(v);
+    const col = n>=20?"var(--g)":n>=0?"#7ab":n>=-20?"var(--n)":n>=-60?"var(--f)":"var(--ef)";
+    return `<div class="src-row">
+      <div class="src-top">
+        <span class="src-name">${lbl}</span>
+        <span class="src-val" style="color:${col}">${signed(n)}</span>
+      </div>
+      <div class="src-track">
+        <div class="src-fill" style="width:${srcPct(n)};background:${col}"></div>
+      </div>
+    </div>`;
+  }).join("") || `<div style="color:var(--text3);font-size:13px">No breakdown available</div>`;
 
   // Bottom stats
-  const bottom = document.getElementById('bottom-cards');
-  bottom.style.display = 'grid';
+  const bot = document.getElementById("bottom-cards");
+  bot.style.display = "grid";
+  const fg = scores["fear_greed"], rd = scores["reddit"];
+  const fgEl = document.getElementById("fg-val");
+  fgEl.textContent = fg !== undefined ? signed(fg) : "N/A";
+  fgEl.style.color = fg !== undefined ? zCfg.color : "var(--text3)";
+  document.getElementById("fg-lbl").textContent = fg !== undefined ? zone : "Not available for this asset";
+  const rdEl = document.getElementById("reddit-val");
+  rdEl.textContent = rd !== undefined ? signed(rd) : "N/A";
+  rdEl.style.color = rd !== undefined ? (parseFloat(rd)>=0?"var(--g)":"var(--ef)") : "var(--text3)";
+  document.getElementById("reddit-sub").textContent = rd !== undefined ? "Community sentiment" : "Not available";
 
-  const fgVal = scores['fear_greed'];
-  const rdVal = scores['reddit'];
-
-  const fgEl = document.getElementById('fg-val');
-  const fgLbl = document.getElementById('fg-lbl');
-  if(fgVal !== undefined) {
-    fgEl.textContent = signed(fgVal);
-    fgEl.style.color = zCfg.color;
-    fgLbl.textContent = zone;
-  } else {
-    fgEl.textContent = 'N/A';
-    fgLbl.textContent = 'Not available for this asset';
-  }
-
-  const rdEl = document.getElementById('reddit-val');
-  const rdSub = document.getElementById('reddit-sub');
-  if(rdVal !== undefined) {
-    rdEl.textContent = signed(rdVal);
-    rdEl.style.color = parseFloat(rdVal) >= 0 ? 'var(--g)' : 'var(--ef)';
-    rdSub.textContent = 'Community sentiment';
-  } else {
-    rdEl.textContent = 'N/A';
-    rdSub.textContent = 'Not available';
-  }
-
-  // Timestamp
-  document.getElementById('ts-label').textContent = fmtTs(data.timestamp);
-  document.getElementById('live-txt').textContent = 'Live · ' + asset.label;
+  document.getElementById("ts-label").textContent = fmtTs(data.timestamp);
+  document.getElementById("live-txt").textContent  = `Live · ${meta.label||key}`;
 }
 
-// ── Copy to clipboard ────────────────────────────────────────
+// ── Select asset ──────────────────────────────────────────────
+function selectAsset(key) {
+  currentAsset = key;
+  document.querySelectorAll(".asset-btn").forEach(b => b.classList.remove("active"));
+  const btn = document.getElementById("ab-"+key);
+  if(btn) btn.classList.add("active");
+  renderScore(key);
+}
+
+// ── Copy ──────────────────────────────────────────────────────
 function copyScore(score) {
-  const s = (score >= 0 ? '' : '') + score.toFixed(1);
   navigator.clipboard.writeText(String(score.toFixed(1))).then(() => {
-    const btn = document.getElementById('copy-main');
-    if(btn) {
-      const orig = btn.innerHTML;
-      btn.innerHTML = '✓ &nbsp;Copied! Now paste into TradingView Bias Score';
-      setTimeout(() => { btn.innerHTML = orig; }, 2500);
-    }
-    showToast('✓  Score copied — paste into AISO Bias Score field');
+    const btn = document.getElementById("copy-main");
+    if(btn){ const o=btn.innerHTML; btn.textContent="✓  Copied!"; setTimeout(()=>btn.innerHTML=o,2200); }
+    showToast("✓  Score copied — paste into AISO Bias Score field");
   });
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
+// ── Load all scores from aiso_all_scores.json ─────────────────
+async function loadAllScores() {
+  document.getElementById("live-txt").textContent = "Loading...";
+  try {
+    const res = await fetch("./aiso_all_scores.json?t="+Date.now());
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const json = await res.json();
+    allScores  = json.assets || {};
 
-function showTVHint() {
-  showToast('Open AISO Settings → Enable Manual Bias → Paste number');
-}
+    buildLeaders(allScores);
+    buildGrid(currentCat);
+    renderScore(currentAsset);
 
-// ── Load score JSON ──────────────────────────────────────────
-async function loadScore(assetKey) {
-  assetKey = assetKey || currentAsset;
-  const card = document.getElementById('score-card');
-  card.innerHTML = `<div class="loading-state"><div class="spinner"></div><div class="loading-txt">Fetching ${assetKey} score...</div></div>`;
-  document.getElementById('live-txt').textContent = 'Connecting...';
-  document.getElementById('bottom-cards').style.display = 'none';
+    const ts = json.generated_at ? fmtTs(json.generated_at) : "";
+    document.getElementById("ts-label").textContent = ts;
+    document.getElementById("live-txt").textContent = `${Object.keys(allScores).length} markets live`;
 
-  // Try per-asset file first (scores/BTC.json), fall back to aiso_score.json
-  const urls = [
-    `./scores/${assetKey}.json?t=${Date.now()}`,
-    `./aiso_score.json?t=${Date.now()}`,
-  ];
-
-  let data = null;
-  for(const url of urls) {
+  } catch(e) {
+    // Fallback: try aiso_score.json (single asset)
     try {
-      const res = await fetch(url);
-      if(!res.ok) continue;
-      const json = await res.json();
-      // Use this file if it matches the requested asset OR it's the fallback
-      if(json.asset === assetKey || url.includes('aiso_score')) {
-        data = json;
-        break;
+      const res2 = await fetch("./aiso_score.json?t="+Date.now());
+      if(res2.ok) {
+        const d = await res2.json();
+        allScores[d.asset] = d;
+        buildGrid(currentCat);
+        renderScore(d.asset||"BTC");
+        document.getElementById("live-txt").textContent = "Partial data";
+        showToast("⚠ Full scores unavailable — showing "+d.asset+" only");
+        return;
       }
-    } catch { continue; }
-  }
-
-  if(!data) {
-    card.innerHTML = `<div class="error-txt">
-      ⚠ No score available for ${assetKey}<br>
+    } catch {}
+    document.getElementById("score-card").innerHTML = `<div class="error-txt">
+      ⚠ Could not load scores<br>
       <span style="font-size:11px;color:var(--text3);margin-top:8px;display:block">
-        Run: python fetcher_v2.py --asset ${assetKey}<br>
-        then push scores/${assetKey}.json to your repo
-      </span>
-    </div>`;
-    document.getElementById('live-txt').textContent = 'Unavailable';
-    return;
+        ${e.message}<br><br>
+        Make sure aiso_all_scores.json exists in your repo and GitHub Pages is enabled.
+      </span></div>`;
+    document.getElementById("live-txt").textContent = "Offline";
   }
 
-  currentData = data;
-  renderScore(data);
-
-  // Auto-refresh in 5 minutes
   clearTimeout(refreshTimer);
-  refreshTimer = setTimeout(() => loadScore(currentAsset), 5 * 60 * 1000);
+  refreshTimer = setTimeout(loadAllScores, 5*60*1000);
 }
 
-// ── Init ─────────────────────────────────────────────────────
-buildAssetGrid('all');
-loadScore('BTC');
+// ── Init ──────────────────────────────────────────────────────
+buildGrid("all");
+loadAllScores();
 </script>
 </body>
 </html>
