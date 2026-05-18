@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-05-18T10:10:50.904804+00:00",
-  "asset": "BTC",
-  "asset_label": "Bitcoin",
-  "ticker": "BTC",
+  "timestamp": "2026-05-18T10:10:52.501026+00:00",
+  "asset": "ETH",
+  "asset_label": "Ethereum",
+  "ticker": "ETH",
   "category": "crypto",
   "composite": -24.2,
   "zone": "FEAR",

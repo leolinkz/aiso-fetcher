@@ -1,0 +1,197 @@
+{
+  "generated_at": "2026-05-18T10:11:10.136133+00:00",
+  "count": 14,
+  "assets": {
+    "BTC": {
+      "timestamp": "2026-05-18T10:10:50.904804+00:00",
+      "asset": "BTC",
+      "asset_label": "Bitcoin",
+      "ticker": "BTC",
+      "category": "crypto",
+      "composite": -24.2,
+      "zone": "FEAR",
+      "scores": {
+        "fear_greed": -44,
+        "reddit": 0.0
+      },
+      "weights": {
+        "fear_greed": 0.55
+      }
+    },
+    "ETH": {
+      "timestamp": "2026-05-18T10:10:52.501026+00:00",
+      "asset": "ETH",
+      "asset_label": "Ethereum",
+      "ticker": "ETH",
+      "category": "crypto",
+      "composite": -24.2,
+      "zone": "FEAR",
+      "scores": {
+        "fear_greed": -44,
+        "reddit": 0.0
+      },
+      "weights": {
+        "fear_greed": 0.55
+      }
+    },
+    "SOL": {
+      "timestamp": "2026-05-18T10:10:54.040540+00:00",
+      "asset": "SOL",
+      "asset_label": "Solana",
+      "ticker": "SOL",
+      "category": "crypto",
+      "composite": -24.2,
+      "zone": "FEAR",
+      "scores": {
+        "fear_greed": -44,
+        "reddit": 0.0
+      },
+      "weights": {
+        "fear_greed": 0.55
+      }
+    },
+    "SPY": {
+      "timestamp": "2026-05-18T10:10:55.469252+00:00",
+      "asset": "SPY",
+      "asset_label": "S&P 500",
+      "ticker": "SPY",
+      "category": "stocks",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "QQQ": {
+      "timestamp": "2026-05-18T10:10:56.859340+00:00",
+      "asset": "QQQ",
+      "asset_label": "Nasdaq 100",
+      "ticker": "QQQ",
+      "category": "stocks",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "NVDA": {
+      "timestamp": "2026-05-18T10:10:58.228981+00:00",
+      "asset": "NVDA",
+      "asset_label": "Nvidia",
+      "ticker": "NVDA",
+      "category": "stocks",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "TSLA": {
+      "timestamp": "2026-05-18T10:10:59.585890+00:00",
+      "asset": "TSLA",
+      "asset_label": "Tesla",
+      "ticker": "TSLA",
+      "category": "stocks",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "MSTR": {
+      "timestamp": "2026-05-18T10:11:00.941411+00:00",
+      "asset": "MSTR",
+      "asset_label": "MicroStrategy",
+      "ticker": "MSTR",
+      "category": "stocks",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "GOLD": {
+      "timestamp": "2026-05-18T10:11:02.272954+00:00",
+      "asset": "GOLD",
+      "asset_label": "Gold",
+      "ticker": "XAU",
+      "category": "commodity",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "SILVER": {
+      "timestamp": "2026-05-18T10:11:03.610337+00:00",
+      "asset": "SILVER",
+      "asset_label": "Silver",
+      "ticker": "XAG",
+      "category": "commodity",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "OIL": {
+      "timestamp": "2026-05-18T10:11:04.937574+00:00",
+      "asset": "OIL",
+      "asset_label": "Crude Oil",
+      "ticker": "WTI",
+      "category": "commodity",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "EURUSD": {
+      "timestamp": "2026-05-18T10:11:06.265100+00:00",
+      "asset": "EURUSD",
+      "asset_label": "EUR / USD",
+      "ticker": "EUR",
+      "category": "forex",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "GBPUSD": {
+      "timestamp": "2026-05-18T10:11:07.600321+00:00",
+      "asset": "GBPUSD",
+      "asset_label": "GBP / USD",
+      "ticker": "GBP",
+      "category": "forex",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    },
+    "USDJPY": {
+      "timestamp": "2026-05-18T10:11:08.935578+00:00",
+      "asset": "USDJPY",
+      "asset_label": "USD / JPY",
+      "ticker": "JPY",
+      "category": "forex",
+      "composite": 0.0,
+      "zone": "NEUTRAL",
+      "scores": {
+        "reddit": 0.0
+      },
+      "weights": {}
+    }
+  }
+}

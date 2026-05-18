@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:10:58.228981+00:00",
+  "asset": "NVDA",
+  "asset_label": "Nvidia",
+  "ticker": "NVDA",
+  "category": "stocks",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

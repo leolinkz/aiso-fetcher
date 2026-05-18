@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:11:07.600321+00:00",
+  "asset": "GBPUSD",
+  "asset_label": "GBP / USD",
+  "ticker": "GBP",
+  "category": "forex",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

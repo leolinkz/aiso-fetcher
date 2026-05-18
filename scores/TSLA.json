@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:10:59.585890+00:00",
+  "asset": "TSLA",
+  "asset_label": "Tesla",
+  "ticker": "TSLA",
+  "category": "stocks",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

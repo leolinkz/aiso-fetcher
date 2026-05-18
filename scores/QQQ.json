@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:10:56.859340+00:00",
+  "asset": "QQQ",
+  "asset_label": "Nasdaq 100",
+  "ticker": "QQQ",
+  "category": "stocks",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

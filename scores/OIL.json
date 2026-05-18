@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:11:04.937574+00:00",
+  "asset": "OIL",
+  "asset_label": "Crude Oil",
+  "ticker": "WTI",
+  "category": "commodity",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:11:03.610337+00:00",
+  "asset": "SILVER",
+  "asset_label": "Silver",
+  "ticker": "XAG",
+  "category": "commodity",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

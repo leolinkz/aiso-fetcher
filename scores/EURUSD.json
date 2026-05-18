@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:11:06.265100+00:00",
+  "asset": "EURUSD",
+  "asset_label": "EUR / USD",
+  "ticker": "EUR",
+  "category": "forex",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

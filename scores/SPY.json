@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:10:55.469252+00:00",
+  "asset": "SPY",
+  "asset_label": "S&P 500",
+  "ticker": "SPY",
+  "category": "stocks",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

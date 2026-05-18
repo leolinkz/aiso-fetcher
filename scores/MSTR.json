@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:11:00.941411+00:00",
+  "asset": "MSTR",
+  "asset_label": "MicroStrategy",
+  "ticker": "MSTR",
+  "category": "stocks",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}

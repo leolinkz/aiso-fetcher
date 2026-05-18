@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-18T10:11:02.272954+00:00",
+  "asset": "GOLD",
+  "asset_label": "Gold",
+  "ticker": "XAU",
+  "category": "commodity",
+  "composite": 0.0,
+  "zone": "NEUTRAL",
+  "scores": {
+    "reddit": 0.0
+  },
+  "weights": {}
+}
