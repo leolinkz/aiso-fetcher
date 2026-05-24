@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-05-24T20:58:48.053954+00:00",
+  "generated_at": "2026-05-24T22:03:41.904285+00:00",
   "count": 14,
   "assets": {
     "BTC": {
-      "timestamp": "2026-05-24T20:58:24.881601+00:00",
+      "timestamp": "2026-05-24T22:03:22.559821+00:00",
       "asset": "BTC",
       "asset_label": "Bitcoin",
       "ticker": "BTC",
@@ -19,7 +19,7 @@
       }
     },
     "ETH": {
-      "timestamp": "2026-05-24T20:58:26.700993+00:00",
+      "timestamp": "2026-05-24T22:03:24.016478+00:00",
       "asset": "ETH",
       "asset_label": "Ethereum",
       "ticker": "ETH",
@@ -35,7 +35,7 @@
       }
     },
     "SOL": {
-      "timestamp": "2026-05-24T20:58:28.385415+00:00",
+      "timestamp": "2026-05-24T22:03:25.416721+00:00",
       "asset": "SOL",
       "asset_label": "Solana",
       "ticker": "SOL",
@@ -51,7 +51,7 @@
       }
     },
     "SPY": {
-      "timestamp": "2026-05-24T20:58:30.294584+00:00",
+      "timestamp": "2026-05-24T22:03:26.983583+00:00",
       "asset": "SPY",
       "asset_label": "S&P 500",
       "ticker": "SPY",
@@ -64,7 +64,7 @@
       "weights": {}
     },
     "QQQ": {
-      "timestamp": "2026-05-24T20:58:32.096420+00:00",
+      "timestamp": "2026-05-24T22:03:28.404346+00:00",
       "asset": "QQQ",
       "asset_label": "Nasdaq 100",
       "ticker": "QQQ",
@@ -77,7 +77,7 @@
       "weights": {}
     },
     "NVDA": {
-      "timestamp": "2026-05-24T20:58:33.765775+00:00",
+      "timestamp": "2026-05-24T22:03:29.799123+00:00",
       "asset": "NVDA",
       "asset_label": "Nvidia",
       "ticker": "NVDA",
@@ -90,7 +90,7 @@
       "weights": {}
     },
     "TSLA": {
-      "timestamp": "2026-05-24T20:58:35.580544+00:00",
+      "timestamp": "2026-05-24T22:03:31.250256+00:00",
       "asset": "TSLA",
       "asset_label": "Tesla",
       "ticker": "TSLA",
@@ -103,7 +103,7 @@
       "weights": {}
     },
     "MSTR": {
-      "timestamp": "2026-05-24T20:58:37.343373+00:00",
+      "timestamp": "2026-05-24T22:03:32.660994+00:00",
       "asset": "MSTR",
       "asset_label": "MicroStrategy",
       "ticker": "MSTR",
@@ -116,7 +116,7 @@
       "weights": {}
     },
     "GOLD": {
-      "timestamp": "2026-05-24T20:58:38.963324+00:00",
+      "timestamp": "2026-05-24T22:03:34.000215+00:00",
       "asset": "GOLD",
       "asset_label": "Gold",
       "ticker": "XAU",
@@ -129,7 +129,7 @@
       "weights": {}
     },
     "SILVER": {
-      "timestamp": "2026-05-24T20:58:40.537615+00:00",
+      "timestamp": "2026-05-24T22:03:35.347251+00:00",
       "asset": "SILVER",
       "asset_label": "Silver",
       "ticker": "XAG",
@@ -142,7 +142,7 @@
       "weights": {}
     },
     "OIL": {
-      "timestamp": "2026-05-24T20:58:42.113876+00:00",
+      "timestamp": "2026-05-24T22:03:36.686707+00:00",
       "asset": "OIL",
       "asset_label": "Crude Oil",
       "ticker": "WTI",
@@ -155,7 +155,7 @@
       "weights": {}
     },
     "EURUSD": {
-      "timestamp": "2026-05-24T20:58:43.683688+00:00",
+      "timestamp": "2026-05-24T22:03:38.026256+00:00",
       "asset": "EURUSD",
       "asset_label": "EUR / USD",
       "ticker": "EUR",
@@ -168,7 +168,7 @@
       "weights": {}
     },
     "GBPUSD": {
-      "timestamp": "2026-05-24T20:58:45.280154+00:00",
+      "timestamp": "2026-05-24T22:03:39.368002+00:00",
       "asset": "GBPUSD",
       "asset_label": "GBP / USD",
       "ticker": "GBP",
@@ -181,7 +181,7 @@
       "weights": {}
     },
     "USDJPY": {
-      "timestamp": "2026-05-24T20:58:46.853361+00:00",
+      "timestamp": "2026-05-24T22:03:40.703764+00:00",
       "asset": "USDJPY",
       "asset_label": "USD / JPY",
       "ticker": "JPY",
