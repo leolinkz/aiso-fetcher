@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-06-18T22:11:12.329634+00:00",
+  "generated_at": "2026-06-19T01:43:54.379615+00:00",
   "count": 14,
   "assets": {
     "BTC": {
-      "timestamp": "2026-06-18T22:10:53.065600+00:00",
+      "timestamp": "2026-06-19T01:43:34.886807+00:00",
       "asset": "BTC",
       "asset_label": "Bitcoin",
       "ticker": "BTC",
       "category": "crypto",
-      "composite": -38.5,
+      "composite": -39.6,
       "zone": "FEAR",
       "scores": {
-        "fear_greed": -70,
+        "fear_greed": -72,
         "reddit": 0.0
       },
       "weights": {
@@ -19,15 +19,15 @@
       }
     },
     "ETH": {
-      "timestamp": "2026-06-18T22:10:54.647748+00:00",
+      "timestamp": "2026-06-19T01:43:36.470553+00:00",
       "asset": "ETH",
       "asset_label": "Ethereum",
       "ticker": "ETH",
       "category": "crypto",
-      "composite": -38.5,
+      "composite": -39.6,
       "zone": "FEAR",
       "scores": {
-        "fear_greed": -70,
+        "fear_greed": -72,
         "reddit": 0.0
       },
       "weights": {
@@ -35,15 +35,15 @@
       }
     },
     "SOL": {
-      "timestamp": "2026-06-18T22:10:56.182697+00:00",
+      "timestamp": "2026-06-19T01:43:38.027490+00:00",
       "asset": "SOL",
       "asset_label": "Solana",
       "ticker": "SOL",
       "category": "crypto",
-      "composite": -38.5,
+      "composite": -39.6,
       "zone": "FEAR",
       "scores": {
-        "fear_greed": -70,
+        "fear_greed": -72,
         "reddit": 0.0
       },
       "weights": {
@@ -51,7 +51,7 @@
       }
     },
     "SPY": {
-      "timestamp": "2026-06-18T22:10:57.631170+00:00",
+      "timestamp": "2026-06-19T01:43:39.450606+00:00",
       "asset": "SPY",
       "asset_label": "S&P 500",
       "ticker": "SPY",
@@ -64,7 +64,7 @@
       "weights": {}
     },
     "QQQ": {
-      "timestamp": "2026-06-18T22:10:58.995983+00:00",
+      "timestamp": "2026-06-19T01:43:40.824519+00:00",
       "asset": "QQQ",
       "asset_label": "Nasdaq 100",
       "ticker": "QQQ",
@@ -77,7 +77,7 @@
       "weights": {}
     },
     "NVDA": {
-      "timestamp": "2026-06-18T22:11:00.364094+00:00",
+      "timestamp": "2026-06-19T01:43:42.203826+00:00",
       "asset": "NVDA",
       "asset_label": "Nvidia",
       "ticker": "NVDA",
@@ -90,7 +90,7 @@
       "weights": {}
     },
     "TSLA": {
-      "timestamp": "2026-06-18T22:11:01.721644+00:00",
+      "timestamp": "2026-06-19T01:43:43.762487+00:00",
       "asset": "TSLA",
       "asset_label": "Tesla",
       "ticker": "TSLA",
@@ -103,7 +103,7 @@
       "weights": {}
     },
     "MSTR": {
-      "timestamp": "2026-06-18T22:11:03.081375+00:00",
+      "timestamp": "2026-06-19T01:43:45.151693+00:00",
       "asset": "MSTR",
       "asset_label": "MicroStrategy",
       "ticker": "MSTR",
@@ -116,7 +116,7 @@
       "weights": {}
     },
     "GOLD": {
-      "timestamp": "2026-06-18T22:11:04.430394+00:00",
+      "timestamp": "2026-06-19T01:43:46.487921+00:00",
       "asset": "GOLD",
       "asset_label": "Gold",
       "ticker": "XAU",
@@ -129,7 +129,7 @@
       "weights": {}
     },
     "SILVER": {
-      "timestamp": "2026-06-18T22:11:05.774574+00:00",
+      "timestamp": "2026-06-19T01:43:47.825682+00:00",
       "asset": "SILVER",
       "asset_label": "Silver",
       "ticker": "XAG",
@@ -142,7 +142,7 @@
       "weights": {}
     },
     "OIL": {
-      "timestamp": "2026-06-18T22:11:07.109319+00:00",
+      "timestamp": "2026-06-19T01:43:49.168515+00:00",
       "asset": "OIL",
       "asset_label": "Crude Oil",
       "ticker": "WTI",
@@ -155,7 +155,7 @@
       "weights": {}
     },
     "EURUSD": {
-      "timestamp": "2026-06-18T22:11:08.444630+00:00",
+      "timestamp": "2026-06-19T01:43:50.511154+00:00",
       "asset": "EURUSD",
       "asset_label": "EUR / USD",
       "ticker": "EUR",
@@ -168,7 +168,7 @@
       "weights": {}
     },
     "GBPUSD": {
-      "timestamp": "2026-06-18T22:11:09.786590+00:00",
+      "timestamp": "2026-06-19T01:43:51.847752+00:00",
       "asset": "GBPUSD",
       "asset_label": "GBP / USD",
       "ticker": "GBP",
@@ -181,7 +181,7 @@
       "weights": {}
     },
     "USDJPY": {
-      "timestamp": "2026-06-18T22:11:11.129071+00:00",
+      "timestamp": "2026-06-19T01:43:53.179088+00:00",
       "asset": "USDJPY",
       "asset_label": "USD / JPY",
       "ticker": "JPY",
