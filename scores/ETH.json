@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-07-03T22:05:21.046463+00:00",
+  "timestamp": "2026-07-04T00:05:42.018436+00:00",
   "asset": "ETH",
   "asset_label": "Ethereum",
   "ticker": "ETH",
   "category": "crypto",
-  "composite": -31.9,
+  "composite": -30.8,
   "zone": "FEAR",
   "scores": {
-    "fear_greed": -58,
+    "fear_greed": -56,
     "reddit": 0.0
   },
   "weights": {
