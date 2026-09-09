@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-08T23:53:50.036941+00:00",
+  "timestamp": "2026-09-09T03:36:19.994406+00:00",
   "asset": "SOL",
   "asset_label": "Solana",
   "ticker": "SOL",
   "category": "crypto",
-  "composite": 20.9,
-  "zone": "GREED",
+  "composite": 17.6,
+  "zone": "NEUTRAL",
   "scores": {
-    "fear_greed": 38,
+    "fear_greed": 32,
     "reddit": 0.0
   },
   "weights": {
