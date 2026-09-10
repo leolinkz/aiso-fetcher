@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-09-09T23:00:12.059753+00:00",
+  "timestamp": "2026-09-10T03:33:35.534293+00:00",
   "asset": "BTC",
   "asset_label": "Bitcoin",
   "ticker": "BTC",
   "category": "crypto",
-  "composite": 17.6,
-  "zone": "NEUTRAL",
+  "composite": 20.9,
+  "zone": "GREED",
   "scores": {
-    "fear_greed": 32,
+    "fear_greed": 38,
     "reddit": 0.0
   },
   "weights": {
