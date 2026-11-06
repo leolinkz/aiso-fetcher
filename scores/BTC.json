@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-11-05T19:46:47.581607+00:00",
+  "timestamp": "2026-11-06T00:51:54.905272+00:00",
   "asset": "BTC",
   "asset_label": "Bitcoin",
   "ticker": "BTC",
   "category": "crypto",
-  "composite": 0.0,
-  "zone": "NEUTRAL",
+  "composite": -24.2,
+  "zone": "FEAR",
   "scores": {
-    "fear_greed": 0,
+    "fear_greed": -44,
     "reddit": 0.0
   },
   "weights": {
